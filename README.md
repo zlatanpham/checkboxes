@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-yarn add ̌@uxui/checkboxes
+yarn add @uxui/checkboxes
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ yarn add ̌@uxui/checkboxes
 ```tsx
 import * as React from 'react';
 
-import useCheckboxes from '@uxui/checkboxes';
+import { useCheckboxes } from '@uxui/checkboxes';
 ```
 
 ## License

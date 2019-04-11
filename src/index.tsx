@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 export interface UseCheckboxesOutput<T> {
   checkedItems: T[];
+  disabledItems: T[];
   setCheckedItems: (items: T[]) => void;
+  setDisabledItems: (items: T[]) => void;
   reset: () => void;
   getCheckboxProps: ({
     item,
@@ -17,16 +19,23 @@ export interface UseCheckboxesOutput<T> {
 export function useCheckboxes<T>({
   items,
   defaultItems = [],
+  defaultDisabledItems = [],
 }: {
   items: T[];
   defaultItems?: T[];
+  defaultDisabledItems?: T[];
 }): UseCheckboxesOutput<T> {
   const [checkedItems, setCheckedItems] = useState<T[]>(defaultItems);
+  const [disabledItems, setDisabledItems] = useState<T[]>(defaultDisabledItems);
   const [lastItem, setLastItem] = useState();
 
   return {
     checkedItems,
-    setCheckedItems,
+    setCheckedItems: items => {
+      setCheckedItems(items.filter(itm => !disabledItems.includes(itm)));
+    },
+    disabledItems,
+    setDisabledItems,
     reset: () => {
       setLastItem(null);
       setCheckedItems([]);
@@ -49,7 +58,9 @@ export function useCheckboxes<T>({
           const lastIndex = items.findIndex(itm => itm === lastItem);
           const from = itemIndex > lastIndex ? lastIndex : itemIndex;
           const to = (itemIndex < lastIndex ? lastIndex : itemIndex) + 1;
-          const slice = [...items].slice(from, to);
+          const slice = [...items]
+            .slice(from, to)
+            .filter(itm => !disabledItems.includes(itm));
 
           if (checkedItems.includes(item)) {
             setCheckedItems(checkedItems.filter(itm => !slice.includes(itm)));
@@ -59,7 +70,7 @@ export function useCheckboxes<T>({
               ...slice,
             ]);
           }
-        } else {
+        } else if (!disabledItems.includes(item)) {
           if (checkedItems.includes(item)) {
             setCheckedItems(checkedItems.filter(itm => itm !== item));
           } else {
