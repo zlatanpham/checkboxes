@@ -1,7 +1,7 @@
 {
   "name": "@uxui/checkboxes",
-  "version": "0.0.1",
-  "description": "React hook allows using shift+click to select rangee of checkboxes and more...",
+  "version": "0.0.2",
+  "description": "React hook allows using shift+click to select range of checkboxes and more...",
   "author": "Zlatan Pham <zlatan.pham@gmail.com> (https://github.com/zlatanpham)",
   "license": "MIT",
   "repository": "",
