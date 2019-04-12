@@ -25,7 +25,9 @@ export function useCheckboxes<T>({
   defaultItems?: T[];
   defaultDisabledItems?: T[];
 }): UseCheckboxesOutput<T> {
-  const [checkedItems, setCheckedItems] = useState<T[]>(defaultItems);
+  const [checkedItems, setCheckedItems] = useState<T[]>(
+    defaultItems.filter(itm => !defaultDisabledItems.includes(itm)),
+  );
   const [disabledItems, setDisabledItems] = useState<T[]>(defaultDisabledItems);
   const [lastItem, setLastItem] = useState();
 
